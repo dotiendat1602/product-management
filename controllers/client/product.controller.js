@@ -1,21 +1,17 @@
+const Product = require("../../model/product.model");
+
 // [GET] /products/
-module.exports.index = (req, res) => {
+module.exports.index = async (req, res) => {
+    const products = await Product.find({
+        status: "active",
+        deleted: false
+    });
+    for (const item of products) {
+        item.priceNew = (item.price*(1-item.discountPercentage/100)).toFixed(2);
+    }
+
     res.render("client/pages/products/index", {
-        pageTitle: "Trang danh sách sản phẩm"
+        pageTitle: "Trang danh sách sản phẩm",
+        products: products
     });
 }
-
-// [POST] /products/create
-// module.exports.create = (req, res) => {
-//     res.render("client/pages/products/index");
-// }
-
-// [PATCH] /products/edit
-// module.exports.edit = (req, res) => {
-//     res.render("client/pages/products/index");
-// }
-
-// [GET] /products/detail
-// module.exports.detail = (req, res) => {
-//     res.render("client/pages/products/index");
-// }
