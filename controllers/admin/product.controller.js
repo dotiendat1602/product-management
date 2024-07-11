@@ -58,3 +58,18 @@ module.exports.index = async (req, res) => {
         pagination: pagination
     });
 }
+
+// [GET] /admin/products/change-status/:statusChange/:id
+module.exports.changeStatus = async (req, res) => {
+    // console.log(req.params.id); // Để trả về id động
+    const {id, statusChange} = req.params;
+
+    await Product.updateOne({
+        _id: id
+    }, {
+        status: statusChange
+    });
+
+    res.redirect("back");
+
+}
