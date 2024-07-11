@@ -57,7 +57,7 @@ module.exports.index = async (req, res) => {
         .limit(pagination.limitItems)
         .skip(pagination.skip);
 
-    console.log(products);
+    //console.log(products);
 
     res.render("admin/pages/product/index", {
         pageTitle: "Quản lý sản phẩm",

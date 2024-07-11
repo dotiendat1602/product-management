@@ -32,7 +32,7 @@ if(formSearch){
         let url = new URL(window.location.href);
 
         // Hàm này là hàm ngăn chặn hành vi mặc định của 1 cái gì đó
-        // ở đây hành vi mặc định của form là load lại trang web nên hàm này sẽ ngăn điều đó khi submit
+        // ở đây hành vi mặc định của formsubmit là load lại trang web nên hàm này sẽ ngăn điều đó khi submit
         event.preventDefault();
         const keyword = event.target.elements.keyword.value;
         if(keyword){
@@ -44,3 +44,22 @@ if(formSearch){
     })
 }
 // End Form search
+
+// Pagination
+
+const buttonPagination = document.querySelectorAll("[button-pagination]");
+if(buttonPagination.length > 0){
+    buttonPagination.forEach(button => {
+        let url = new URL(window.location.href);
+
+        button.addEventListener("click", () => {
+            const page = button.getAttribute("button-pagination");
+            
+            url.searchParams.set("page", page);
+
+            window.location.href = url.href;
+        });
+    });
+}
+
+// End pagination
