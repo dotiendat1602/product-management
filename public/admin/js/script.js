@@ -131,7 +131,7 @@ if(boxActions){
             ids.push(input.value);
         });
         if(status != "" && ids.length > 0){
-            const data = {
+            const dataChangeMulti = {
                 status: status,
                 ids: ids
             };
@@ -140,7 +140,7 @@ if(boxActions){
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify(dataChangeMulti),
             })
                 .then(res => res.json())
                 .then(data => {
