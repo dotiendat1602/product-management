@@ -85,7 +85,20 @@ module.exports.changeMulti = async (req, res) => {
     }, {
         status: status
     });
-    
+
+    res.json({
+        code: 200
+    });
+}
+
+// [DELETE] /admin/products/delete
+module.exports.deleteItem = async (req, res) => {
+    const id = req.params.id;
+
+    await Product.deleteOne({
+        _id: id
+    });
+
     res.json({
         code: 200
     });
