@@ -11,5 +11,10 @@ router.patch("/change-multi", controller.changeMulti);
 
 router.patch("/delete/:id", controller.deleteItem);
 
+router.get("/trash", controller.getPageTrash);
+
+router.patch("/restore/:id", controller.restore);
+
+router.delete("/delete-permanently/:id", controller.deletePermanently);
 
 module.exports = router;

@@ -105,3 +105,88 @@ module.exports.deleteItem = async (req, res) => {
         code: 200
     });
 }
+
+// [GET] /admin/products/trash
+module.exports.getPageTrash = async (req, res) => {
+    const find = {
+        deleted: true
+    };
+
+    const filterStatus = [
+        {
+            label: "Tất cả",
+            value: ""
+        },
+        {
+            label: "Hoạt động",
+            value: "active"
+        },
+        {
+            label: "Dừng hoạt động",
+            value: "inactive"
+        },
+    ];
+
+    if(req.query.status){
+        find.status = req.query.status;
+    }
+
+    // Tìm kiếm cơ bản
+    let keyword = "";
+    if(req.query.keyword){
+        const regex = new RegExp(req.query.keyword, "i");
+        find.title = regex;
+        keyword = req.query.keyword;
+    }
+    // Hết tìm kiếm cơ bản
+
+    // Phân trang
+
+    const pagination = await paginationHelper.pagination(req, find);
+
+    // Hết phân trang
+
+
+    const products = await Product
+        .find(find)
+        .limit(pagination.limitItems)
+        .skip(pagination.skip);
+
+    //console.log(products);
+
+    res.render("admin/pages/product/trash", {
+        pageTitle: "Quản lý sản phẩm đã xóa",
+        products: products,
+        keyword: keyword,
+        filterStatus: filterStatus,
+        pagination: pagination
+    });
+}
+
+// [PATCH] /admin/products/restore
+module.exports.restore = async (req, res) => {
+    const id = req.params.id;
+
+    await Product.updateOne({
+        _id: id
+    }, {
+        deleted: false
+    });
+
+    res.json({
+        code: 200
+    });
+}
+
+// [DELETE] /admin/products/delete-permanently
+module.exports.deletePermanently = async (req, res) => {
+    const id = req.params.id;
+
+    await Product.deleteOne({
+        _id: id
+    });
+
+    res.json({
+        code: 200
+    });
+}

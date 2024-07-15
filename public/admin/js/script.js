@@ -157,7 +157,7 @@ if(boxActions){
 // End Box Actions
 
 
-// Xóa bản ghi
+// Xóa mềm bản ghi
 const listButtonDelete = document.querySelectorAll("[button-delete]");
 if(listButtonDelete.length > 0){
     listButtonDelete.forEach(button => {
@@ -176,4 +176,46 @@ if(listButtonDelete.length > 0){
         });
     });
 }
-//End Xóa bản ghi
+//End Xóa mềm bản ghi
+
+
+// Khôi phục bản ghi
+const listButtonRestore = document.querySelectorAll("[button-restore]");
+if(listButtonRestore.length > 0){
+    listButtonRestore.forEach(button => {
+        button.addEventListener("click", () => {
+            const id = button.getAttribute("button-restore");
+
+            fetch(`/admin/products/restore/${id}`, {
+                method: "PATCH"
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.code == 200){
+                        window.location.reload();
+                    }
+                })
+        });
+    });
+}
+// End Khôi phục bản ghi
+
+
+// Xóa vĩnh viễn bản ghi
+const listButtonDeletePermanently = document.querySelectorAll("[button-delete-permanently]");
+if(listButtonDeletePermanently.length > 0){
+    listButtonDeletePermanently.forEach(button => {
+        button.addEventListener("click", () => {
+            const id = button.getAttribute("button-delete-permanently");
+
+            fetch(`/admin/products/delete-permanently/${id}`)
+                .then(res => res.json())
+                .then(data => {
+                    if(data.code == 200){
+                        window.location.reload();
+                    }
+                })
+        });
+    });
+}
+// End Xóa vĩnh viễn bản ghi
