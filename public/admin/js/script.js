@@ -162,9 +162,9 @@ const listButtonDelete = document.querySelectorAll("[button-delete]");
 if(listButtonDelete.length > 0){
     listButtonDelete.forEach(button => {
         button.addEventListener("click", () => {
-            const id = button.getAttribute("button-delete");
+            const link = button.getAttribute("button-delete");
 
-            fetch(`/admin/products/delete/${id}`, {
+            fetch(link, {
                 method: "PATCH"
             })
                 .then(res => res.json())
@@ -184,9 +184,9 @@ const listButtonRestore = document.querySelectorAll("[button-restore]");
 if(listButtonRestore.length > 0){
     listButtonRestore.forEach(button => {
         button.addEventListener("click", () => {
-            const id = button.getAttribute("button-restore");
+            const link = button.getAttribute("button-restore");
 
-            fetch(`/admin/products/restore/${id}`, {
+            fetch(link, {
                 method: "PATCH"
             })
                 .then(res => res.json())
@@ -206,9 +206,11 @@ const listButtonDeletePermanently = document.querySelectorAll("[button-delete-pe
 if(listButtonDeletePermanently.length > 0){
     listButtonDeletePermanently.forEach(button => {
         button.addEventListener("click", () => {
-            const id = button.getAttribute("button-delete-permanently");
+            const link = button.getAttribute("button-delete-permanently");
 
-            fetch(`/admin/products/delete-permanently/${id}`)
+            fetch(link, {
+                method: "DELETE"
+            })
                 .then(res => res.json())
                 .then(data => {
                     if(data.code == 200){

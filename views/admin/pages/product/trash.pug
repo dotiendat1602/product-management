@@ -71,11 +71,11 @@ block main
               td
                 button(
                     class="btn btn-warning btn-sm"
-                    button-restore=item.id
+                    button-restore=`/${prefixAdmin}/products/restore/${item.id}`
                 ) Khôi phục
                 button(
                   class="btn btn-danger btn-sm ml-1"
-                  button-delete-permanently=item.id
+                  button-delete-permanently=`/${prefixAdmin}/products/delete-permanently/${item.id}`
                 ) Xóa vĩnh viễn
 
   +pagination(pagination)
