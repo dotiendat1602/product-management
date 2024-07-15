@@ -46,7 +46,10 @@ module.exports.index = async (req, res) => {
     const products = await Product
         .find(find)
         .limit(pagination.limitItems)
-        .skip(pagination.skip);
+        .skip(pagination.skip)
+        .sort({
+            position: "desc"
+        });
 
     //console.log(products);
 
@@ -199,6 +202,22 @@ module.exports.deletePermanently = async (req, res) => {
 
     await Product.deleteOne({
         _id: id
+    });
+
+    res.json({
+        code: 200
+    });
+}
+
+// [PATCH] /admin/products/change-position
+module.exports.changePosition = async (req, res) => {
+    const id = req.params.id;
+    const position = req.body.position;
+
+    await Product.updateOne({
+        _id: id
+    }, {
+        position: position
     });
 
     res.json({

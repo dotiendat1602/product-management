@@ -221,3 +221,31 @@ if(listButtonDeletePermanently.length > 0){
     });
 }
 // End Xóa vĩnh viễn bản ghi
+
+
+// Thay đổi vị trí
+const listInputPosition = document.querySelectorAll("input[name='position']");
+if(listInputPosition.length > 0){
+    listInputPosition.forEach(input => {
+        input.addEventListener("change", () => {
+            const position = parseInt(input.value);
+            const link = input.getAttribute("link");
+            fetch(link, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    position: position
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.code == 200){
+                        console.log(data);
+                    }
+                })
+        })
+    })
+}
+// End Thay đổi vị trí
