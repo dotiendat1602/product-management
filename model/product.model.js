@@ -11,7 +11,10 @@ const Product = mongoose.model(
         thumbnail: String,
         status: String,
         position: Number,
-        deleted: Boolean
+        deleted: {
+            type: Boolean,
+            default: false
+        }
     },
     "products"
 );

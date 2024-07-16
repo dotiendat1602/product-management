@@ -19,4 +19,8 @@ router.delete("/delete-permanently/:id", controller.deletePermanently);
 
 router.patch("/change-position/:id", controller.changePosition);
 
+router.get("/create", controller.create);
+
+router.post("/create", controller.createPost);
+
 module.exports = router;
