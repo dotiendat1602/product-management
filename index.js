@@ -31,10 +31,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
-app.use(express.static('public'));
+app.use(express.static(`${__dirname}/public`));
 
 // App local Variables (chỉ dùng được trong các file pug)
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
