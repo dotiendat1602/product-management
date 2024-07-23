@@ -2,9 +2,15 @@ const productCategory = require("../../model/products-category.model");
 const systemConfig = require("../../config/system.js");
 
 // [GET] /admin/products-category
-module.exports.index = (req, res) => {
+module.exports.index = async (req, res) => {
+    const records = await productCategory.find({
+        deleted: false
+    });
+    
+
     res.render("admin/pages/products-category/index", {
-        pageTitle: "Danh mục sản phẩm"
+        pageTitle: "Danh mục sản phẩm",
+        records: records
     })
 }
 
@@ -16,16 +22,16 @@ module.exports.create = (req, res) => {
   }
   
   // [POST] /admin/products-category/create
-  module.exports.createPost = async (req, res) => {
+module.exports.createPost = async (req, res) => {
     if(req.body.position) {
-      req.body.position = parseInt(req.body.position);
+        req.body.position = parseInt(req.body.position);
     } else {
-      const countCategory = await productCategory.countDocuments({});
-      req.body.position = countCategory + 1;
+        const countCategory = await productCategory.countDocuments({});
+        req.body.position = countCategory + 1;
     }
-  
+
     const newCategory = new productCategory(req.body);
     await newCategory.save();
-  
+
     res.redirect(`/${systemConfig.prefixAdmin}/products-category`);
 }
