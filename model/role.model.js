@@ -16,6 +16,6 @@ const roleSchema = new mongoose.Schema({
     // Tự động thêm trường createdAt và updatedAt (https://mongoosejs.com/docs/timestamps.html)
 });
 
-const Role = mongoose.model('Role', RoleSchema, "roles");
+const Role = mongoose.model('Role', roleSchema, "roles");
 
 module.exports = Role;
