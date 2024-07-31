@@ -18,6 +18,6 @@ const accountSchema = new mongoose.Schema({
     // Tự động thêm trường createdAt và updatedAt (https://mongoosejs.com/docs/timestamps.html)
 });
 
-const Account = mongoose.model('Account', roleSchema, "accounts");
+const Account = mongoose.model('Account', accountSchema, "accounts");
 
 module.exports = Account;
