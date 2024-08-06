@@ -2,7 +2,7 @@ const Role = require("../../model/role.model");
 const Account = require("../../model/account.model");
 const md5 = require("md5");
 
-const generateHelper = require("../../helper/generate.healper");
+const generateHelper = require("../../helper/generate.helper");
 const systemConfig = require("../../config/system");
 
 // [GET] /admin/accounts
