@@ -227,7 +227,31 @@ module.exports.getPageTrash = async (req, res) => {
         .limit(pagination.limitItems)
         .skip(pagination.skip);
 
-    //console.log(products);
+    for(const item of products){
+        // Người tạo
+        if(item.createdBy){
+            const accountCreated = await Account.findOne({
+                _id: item.createdBy
+            });
+            item.createdByFullName = accountCreated.fullName;
+        } else {
+            item.createdByFullName = "";
+        }
+
+        item.createdAtFormat = moment(item.createdAt).format("DD/MM/YY HH:mm:ss");
+
+        // Người cập nhật
+        if(item.updatedBy){
+            const accountUpdated = await Account.findOne({
+                _id: item.updatedBy
+            });
+            item.updatedByFullName = accountCreated.fullName;
+        } else{
+            item.updatedByFullName = "";
+        }
+
+        item.updatedAtFormat = moment(item.updatedAt).format("DD/MM/YY HH:mm:ss");
+    }
 
     res.render("admin/pages/products/trash", {
         pageTitle: "Quản lý sản phẩm đã xóa",

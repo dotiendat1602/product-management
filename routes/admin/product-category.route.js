@@ -27,4 +27,18 @@ router.patch(
   controller.editPatch
 );
 
+router.patch("/change-status/:statusChange/:id", controller.changeStatus);
+
+router.patch("/change-multi", controller.changeMulti);
+
+router.get("/detail/:id", controller.detail);
+
+router.patch("/delete/:id", controller.deleteItem);
+
+router.get("/trash", controller.trash);
+
+router.patch("/restore/:id", controller.restore);
+
+router.delete("/delete-permanently/:id", controller.deletePermanently);
+
 module.exports = router;

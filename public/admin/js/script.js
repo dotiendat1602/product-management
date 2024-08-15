@@ -159,6 +159,7 @@ if(boxActions){
 
 // Xóa mềm bản ghi
 const listButtonDelete = document.querySelectorAll("[button-delete]");
+console.log(listButtonDelete);
 if(listButtonDelete.length > 0){
     listButtonDelete.forEach(button => {
         button.addEventListener("click", () => {

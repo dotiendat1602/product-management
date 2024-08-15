@@ -52,6 +52,11 @@ block main
       .card-header Danh sách
       .card-body
         div(class="text-right mb-2")
+          if(role.permissions.includes("products_delete"))
+            a(
+              href=`/${prefixAdmin}/products/trash`
+              class="btn btn-outline-success"
+            ) + Thùng rác
           if(role.permissions.includes("products_create"))
             a(
               href=`/${prefixAdmin}/products/create`
