@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const methodOverride = require('method-override');
 const path = require('path');
+const http = require('http');
+const { Server } = require("socket.io");
 
 const database = require("./config/database.js");
 database.connect();
@@ -17,6 +19,15 @@ const system = require('./config/system.js');
 
 const app = express();
 const port = process.env.PORT;
+
+// SocketIO
+const server = http.createServer(app);
+const io = new Server(server);
+
+io.on("connection", (socket) => {
+  console.log("Có 1 người dùng kết nối", socket.id);
+});
+// End SocketIO
 
 app.use(methodOverride('_method'));
 
@@ -51,6 +62,6 @@ app.get("*", (req, res) => {
     });
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Đang chạy trên cổng ${port}`);
 })
