@@ -32,5 +32,9 @@ module.exports.index = (app) => {
 
     app.use("/user", userRoute);
 
-    app.use("/chat", chatRoute);
+    app.use(
+        "/chat",
+        userMiddleware.requireAuth,
+        chatRoute
+    );
 }
