@@ -29,8 +29,6 @@ module.exports.requireAuth = async (req, res, next) => {
   if(!user) {
     res.redirect("/user/login");
     return;
-  } else {
-    res.locals.user = user;
   }
 
   next();
