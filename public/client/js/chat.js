@@ -1,5 +1,7 @@
 import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js';
 
+
+
 var socket = io();
 
 // Typing
@@ -45,20 +47,30 @@ socket.on("SERVER_RETURN_TYPING", (data) => {
 // CLIENT_SEND_MESSAGE
 const formChat = document.querySelector(".chat .inner-form");
 if(formChat) {
-    formChat.addEventListener("submit", (event) => {
-        event.preventDefault();
+  const upload = new FileUploadWithPreview.FileUploadWithPreview('upload-images', {
+    multiple: true,
+    maxFileCount: 6
+  });
 
-        const content = event.target.content.value;
-        if(content) {
-            socket.emit("CLIENT_SEND_MESSAGE", {
-                content: content
-            });
-            event.target.content.value = "";
-            socket.emit("CLIENT_SEND_TYPING", "hidden");
-        }
-    })
-    // Có thể thêm đoạn SCROLL CHAT TO BOTTOM vào trong này để chỉ đẩy scroll
-    // của người gửi xuống dưới
+  formChat.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const content = event.target.content.value;
+    const images = upload.cachedFileArray;
+
+    if(content || images.length > 0) {
+        socket.emit("CLIENT_SEND_MESSAGE", {
+            content: content,
+            images: images
+        });
+        event.target.content.value = "";
+        upload.resetPreviewPanel();
+        
+        socket.emit("CLIENT_SEND_TYPING", "hidden");
+    }
+  })
+  // Có thể thêm đoạn SCROLL CHAT TO BOTTOM vào trong này để chỉ đẩy scroll
+  // của người gửi xuống dưới
 }
 // END CLIENT_SEND_MESSAGE
 
@@ -69,6 +81,8 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
     
     const div = document.createElement("div");
     let htmlFullName = "";
+    let htmlContent = "";
+    let htmlImages = "";
 
     if(data.userId == myId) {
         div.classList.add("inner-outgoing");
@@ -77,10 +91,31 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
         htmlFullName = `<div class="inner-name">${data.fullName}</div>`;
     }
 
+    if(data.content) {
+      htmlContent = `<div class="inner-content">${data.content}</div>`;
+    }
+  
+    if(data.images.length > 0) {
+      htmlImages += `
+        <div class="inner-images">
+      `;
+  
+      for (const image of data.images) {
+        htmlImages += `
+          <img src="${image}">
+        `;
+      }
+  
+      htmlImages += `
+        </div>
+      `;
+    }
+
     div.classList.add("inner-incoming");
     div.innerHTML = `
         ${htmlFullName}
-        <div class="inner-content">${data.content}</div>
+        ${htmlContent}
+        ${htmlImages}
     `;
     
     const body = document.querySelector(".chat .inner-body");
