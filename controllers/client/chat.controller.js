@@ -26,9 +26,17 @@ module.exports.index = async (req, res) => {
         fullName: fullName,
         content: data.content
       });
-      
+
     });
-    
+
+    // CLIENT_SEND_TYPING
+    socket.on("CLIENT_SEND_TYPING", (type) => {
+      socket.broadcast.emit("SERVER_RETURN_TYPING", {
+        userId: userId,
+        fullName: fullName,
+        type: type
+      });
+    })    
 
   });
   // End Socket IO
