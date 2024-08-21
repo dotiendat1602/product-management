@@ -2,7 +2,6 @@ import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm
 
 
 
-var socket = io();
 
 // Typing
 const inputChat = document.querySelector(".chat .inner-form input[name='content']");
