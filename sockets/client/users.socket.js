@@ -123,7 +123,7 @@ module.exports = (req, res) => {
             acceptFriends: userIdB
         });
 
-        if(existUserAInB) {
+        if(existUserBInA) {
             await User.updateOne({
                 _id: userIdA
             }, {

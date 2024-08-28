@@ -96,7 +96,7 @@ module.exports.friends = async (req, res) => {
         deleted: false,
     }).select("id avatar fullName");      
 
-    res.render("client/pages/users/accept", {
+    res.render("client/pages/users/friends", {
         pageTitle: "Danh sách bạn bè",
         users: users,
     });
