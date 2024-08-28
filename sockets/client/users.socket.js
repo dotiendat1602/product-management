@@ -48,6 +48,16 @@ module.exports = (req, res) => {
             length: infoB.acceptFriends.length,
             userId: userIdB
         });
+
+        // Lấy thông tin của A để trả về cho B
+        const infoA = await User.findOne({
+            _id: userIdA
+        }).select("id fullName avatar");
+
+        socket.broadcast.emit("SERVER_RETURN_INFO_ACCEPT_FRIEND", {
+            userIdB: userIdB,
+            infoA: infoA
+        });
     })
     // END CLIENT_ADD_FRIEND
 
@@ -105,7 +115,7 @@ module.exports = (req, res) => {
             acceptFriends: userIdB
         });
 
-        if(existUserAInB) {
+        if(existUserBInA) {
             await User.updateOne({
                 _id: userIdA
             }, {
@@ -121,7 +131,7 @@ module.exports = (req, res) => {
             requestFriends: userIdA
         });
 
-        if(existUserBInA) {
+        if(existUserAInB) {
             await User.updateOne({
                 _id: userIdB
             }, {
