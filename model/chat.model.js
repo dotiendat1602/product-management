@@ -4,7 +4,8 @@ const chatSchema = new mongoose.Schema({
     userId: String,
     // roomChatId: String,
     content: String,
-    images: Array
+    images: Array,
+    roomChatId: String,
 }, {
     timestamps: true 
     // Tự động thêm trường createdAt và updatedAt (https://mongoosejs.com/docs/timestamps.html)
